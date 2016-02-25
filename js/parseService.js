@@ -1,6 +1,13 @@
 var app = angular.module('chatroom');
 
 app.service('parseService', function($http){
+
+  this.getData = function() { // this is the request of pre existing messages
+    return $http({
+      method:'GET',
+      url: 'https://api.parse.com/1/classes/chat?order=-createdAt'
+    });
+  }
   //Here you'll need to create two methods. One called postData and the other called getData.
   
   //On the lines below create a getData method. This method will retrieve data from the parse backend.
@@ -8,7 +15,16 @@ app.service('parseService', function($http){
   //Be sure to return whatever gets returned from $http so you can call .then in your controller.
  
 
-
+this.postData = function(message) { //this is the message a user is submiting
+  return $http({
+    method: 'POST',
+    url: 'https://api.parse.com/1/classes/chat',
+    data: { 
+      text: message //a key of text and a value of string 
+    }
+    
+  })
+}
   //On the line below create the postData method. This method will add data to the parse backend.
   //The url for the request needs to be 'https://api.parse.com/1/classes/chat'
   //Because we're making a POST request, we need a way to tell parse the data we want to give it, 
